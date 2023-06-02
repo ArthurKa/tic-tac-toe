@@ -1,0 +1,33 @@
+{
+  "extends": "@tsconfig/node18-strictest/tsconfig.json",
+  "compilerOptions": {
+    "noPropertyAccessFromIndexSignature": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "resolveJsonModule": true,
+    "allowUnreachableCode": true,
+    "importsNotUsedAsValues": "remove",
+    "noImplicitOverride": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": false,
+    "exactOptionalPropertyTypes": false,
+    "types": [
+      "@types/node",
+      "@total-typescript/ts-reset",
+    ],
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "rootDir": "src",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+    ],
+  },
+  "include": [
+    "src",
+  ],
+}

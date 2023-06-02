@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+node helpers/eslint.js
+npx lint-staged
+
+if [[ `git diff @ --name-only | grep -E "^(src|tests)/"` != "" ]]; then
+  npm run ts:noWatch
+fi
