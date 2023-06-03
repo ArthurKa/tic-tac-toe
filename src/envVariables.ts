@@ -1,6 +1,6 @@
 /* eslint-disable no-process-env */
 
-function getEnvVariable(name: string, value: string | undefined): string {
+function getEnvVariable(value: string | undefined, name: string): string {
   if(!value) {
     throw new Error(`Please, provide "${name}" .env variable.`);
   }
@@ -8,13 +8,19 @@ function getEnvVariable(name: string, value: string | undefined): string {
   return value;
 }
 
+const nodeEnv = getEnvVariable(process.env.NODE_ENV, 'NODE_ENV');
+
 /** @example 'development' */
 export const NODE_ENV = (
-  getEnvVariable('NODE_ENV', process.env.NODE_ENV) === 'development' ? 'development' : 'production'
+  nodeEnv === 'production'
+    ? 'production'
+    : nodeEnv === 'test'
+      ? 'test'
+      : 'development'
 );
 
 /** @example 'http://localhost' */
-export const HOST = getEnvVariable('HOST', process.env.HOST);
+export const HOST = getEnvVariable(process.env.HOST, 'HOST');
 
 /** @example 3000 */
-export const PORT = +getEnvVariable('PORT', process.env.PORT);
+export const PORT = +getEnvVariable(process.env.PORT, 'PORT');

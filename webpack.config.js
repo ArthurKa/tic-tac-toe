@@ -10,28 +10,46 @@ const Dotenv = require('dotenv-webpack');
 
 const publicDir = path.resolve('public');
 
+const NODE_ENV = /** @type {import('./src/envVariables').NODE_ENV} */ (process.env.NODE_ENV);
 const PORT = Number(process.env.PORT);
 if(!PORT) {
   throw new Error('Something went wrong. cc1yw9');
 }
 
 module.exports = ((/** @type {import('webpack-dev-server').WebpackConfiguration} */ e) => e)({
-  mode: 'development',
+  mode: (
+    NODE_ENV === 'production'
+      ? 'production'
+      : NODE_ENV === 'development'
+        ? 'development'
+        : 'none'
+  ),
   entry: path.resolve('src/index.tsx'),
   output: {
     path: publicDir,
     filename: 'main.js',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
+  stats: {
+    children: true,
+    errorDetails: true,
   },
   module: {
     rules: [
       {
-        test: /\.[jt]sx?$/,
+        test: /\.[jt]sx$/,
         loader: 'esbuild-loader',
         options: {
           loader: 'tsx',
+          target: 'es2015',
+        },
+      },
+      {
+        test: /\.[jt]s$/,
+        loader: 'esbuild-loader',
+        options: {
           target: 'es2015',
         },
       },
