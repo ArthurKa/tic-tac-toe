@@ -1,4 +1,4 @@
-import { SoftShadows, useHelper } from '@react-three/drei';
+import { useHelper } from '@react-three/drei';
 import { useRef } from 'react';
 import { DirectionalLightHelper } from 'three';
 import { NODE_ENV } from '../envVariables';
@@ -14,12 +14,6 @@ export const Lights: React.FC = () => {
 
   return (
     <>
-      <SoftShadows {...{
-        size: 5,
-        focus: 2,
-        samples: 10,
-      }}
-      />
       <directionalLight {...{
         ref,
         position: [10, 10, -10],

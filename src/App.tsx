@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import { MOUSE } from 'three';
+import { MOUSE, TOUCH } from 'three';
 import styled from 'styled-components';
 import { StylesReset } from './style-reset';
 import { DevHelpers, Game, Lights } from './components';
@@ -29,6 +29,9 @@ export const App: React.FC = () => {
           mouseButtons: {
             RIGHT: MOUSE.ROTATE,
             MIDDLE: MOUSE.DOLLY,
+          },
+          touches: {
+            TWO: TOUCH.DOLLY_ROTATE,
           },
         }}
         />
