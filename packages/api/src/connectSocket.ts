@@ -1,7 +1,6 @@
 import { Server } from 'socket.io';
 import { createServer } from 'http';
 import { ClientToServerEvents, ServerToClientEvents } from '@tic-tac-toe/common';
-import { ObjValues } from '@arthurka/ts-utils';
 import { WEBSITE_URL } from './envVariables';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -27,11 +26,7 @@ export const connectSocket = (server: ReturnType<typeof createServer>) => {
         socket.to(roomId).emit('sendCupPosition', ...params);
       });
       socket.on('shareCupPosition', (...params) => {
-        const id = ObjValues(io.sockets.sockets).find(e => e.id !== socket.id && e.rooms.has(roomId))?.id;
-
-        if(id) {
-          socket.to(id).emit('shareCupPosition', ...params);
-        }
+        socket.to(roomId).emit('shareCupPosition', ...params);
       });
     });
   });
