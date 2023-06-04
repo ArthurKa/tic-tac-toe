@@ -17,17 +17,6 @@
       "@total-typescript/ts-reset",
     ],
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "rootDir": "src",
-    "outDir": "dist",
     "moduleResolution": "node",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
-    ],
   },
-  "include": [
-    "src",
-  ],
 }

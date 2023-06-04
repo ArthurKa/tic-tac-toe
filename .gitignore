@@ -1,4 +1,5 @@
 node_modules
 .env
-/public/main.js*
-/public/index.html
+dist
+/packages/website/public/main.js*
+/packages/website/public/index.html

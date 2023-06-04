@@ -3,6 +3,9 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
+
+const { name, workspaces: { packages } } = require('../package.json');
 
 const searchExcludeFilesOrFolders = [
   'node_modules',
@@ -11,6 +14,17 @@ const searchExcludeFilesOrFolders = [
   'dist',
   '.next',
 ];
+
+const packageName = name.split('/')[0];
+
+const command = `ls ${packages.join(' ')}`;
+const lernaPackageNames = (
+  execSync(command)
+    .toString('utf-8')
+    .split('\n')
+    .filter(e => e.endsWith(':'))
+    .map(e => e.slice(0, -1).split('/').slice(-1)[0])
+);
 
 /**
   @type {
@@ -26,6 +40,16 @@ const matchReplacePatterns = [
   [/\(\s+\)/, ['Probably some no needed spaces in parentheses?'], '()'],
   [/\{\s+\}/, ['Probably some no needed spaces in curly braces?'], '{}'],
   [/ +$/m, ['Probably some no needed trailing spaces?'], ''],
+  [
+    new RegExp(`((${packageName}/(?:${lernaPackageNames.join('|')})/)src)/(?!__)`, 'm'),
+    e => [`Probably wrong import from "${e[1]}"? Try to import from "${e[2]}dist".`],
+    '$2dist/',
+  ],
+  [
+    new RegExp(`(?:\\.\\./)+(${lernaPackageNames.join('|')})\\b`, 'm'),
+    e => [`Probably wrong relative import from "${e[0]}"? Try to import from "${packageName}/${e[1]}".`],
+    `${packageName}/$1`,
+  ],
   [/\[\s+\]/, ['Probably some no needed spaces in square brackets?'], '[]'],
   [/\}{\n/, ['Probably forgot space between "}{"?'], '} {\n'],
   [/\){\n/, ['Probably forgot space between "){"?'], ') {\n'],

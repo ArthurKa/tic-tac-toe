@@ -22,5 +22,5 @@ export const NODE_ENV = (
 /** @example 'http://localhost' */
 export const HOST = getEnvVariable(process.env.HOST, 'HOST');
 
-/** @example 3000 */
+/** @example 3002 */
 export const PORT = +getEnvVariable(process.env.PORT, 'PORT');

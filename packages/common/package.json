@@ -1,0 +1,18 @@
+{
+  "name": "@tic-tac-toe/common",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist",
+  "scripts": {
+    "lint:check": "eslint --ext js,jsx,ts,tsx src",
+    "lint:fix": "npm run lint:check -- --fix",
+    "build": "rm -rf dist && tsc",
+    "build:watch": "npm run build -- --watch"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "0.4.2",
+    "@tsconfig/node18-strictest": "1.0.0",
+    "@types/node": "18.13.0",
+    "typescript": "5.1.3"
+  }
+}
