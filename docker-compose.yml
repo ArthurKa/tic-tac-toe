@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  common:
+    container_name: common
+    build:
+      context: .
+      dockerfile: ./packages/common/Dockerfile
+    healthcheck:
+      test: npm run common:healthy
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  api:
+    depends_on:
+      common:
+        condition: service_healthy
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./packages/api/Dockerfile
+    ports:
+      - 8318:3001
+    env_file:
+      - ./packages/api/.env
+
+  website:
+    depends_on:
+      common:
+        condition: service_healthy
+    container_name: website
+    build:
+      context: .
+      dockerfile: ./packages/website/Dockerfile
+    ports:
+      - 9582:3002

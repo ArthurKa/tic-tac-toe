@@ -3,3 +3,4 @@ node_modules
 dist
 /packages/website/public/main.js*
 /packages/website/public/index.html
+package-docker*.json

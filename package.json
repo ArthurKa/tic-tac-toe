@@ -7,6 +7,7 @@
     "lint:fix": "echo npm run lint:fix -w=packages/{common,api,website} | bash",
     "common:build": "npm run start-checks && npm run build -w=packages/common",
     "common:build:watch": "npm run start-checks && npm run build:watch -w=packages/common",
+    "common:healthy": "npm run healthy -w=packages/common",
     "api:start": "npm run start-checks && npm start -w=packages/api",
     "api:ts": "npm run start-checks && npm run ts -w=packages/api",
     "api:ts:noWatch": "npm run start-checks && npm run ts:noWatch -w=packages/api",
