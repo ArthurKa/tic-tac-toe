@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches: master
+
+env:
+  SERVER_IP: 157.90.248.157
+  SERVER_USERNAME: root
+  SERVER_COMMANDS:
+    # PATH="$PATH:/root/.nvm/versions/node/v14.16.0/bin" &&
+    cd ~/tic-tac-toe &&
+    git reset --hard origin/master &&
+    git checkout master &&
+    git fetch &&
+    git reset --hard origin/master &&
+    node helpers/make-package-docker-jsons.js &&
+    docker-compose build &&
+    docker-compose stop &&
+    docker-compose up -d &&
+    echo "New build has been deployed.";
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Connect to server via SSH
+        run:
+          sshpass &>/dev/null || sudo apt install sshpass -y &>/dev/null;
+          sshpass -p '${{secrets.SERVER_PASSWORD}}' ssh -o StrictHostKeyChecking=no ${{env.SERVER_USERNAME}}@${{env.SERVER_IP}} '${{env.SERVER_COMMANDS}}';
