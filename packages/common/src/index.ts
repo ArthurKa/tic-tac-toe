@@ -1,1 +1,1 @@
-export const asd = 123;
+export * from './socket-types';

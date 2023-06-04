@@ -1,6 +1,6 @@
 {
-  "*.js": "npm run lint:check -w=packages/common -w=packages/website -w=packages/api -- --max-warnings 0",
-  "*.ts": "npm run lint:check -w=packages/common -w=packages/website -w=packages/api -- --max-warnings 0",
-  "*.jsx": "npm run lint:check -w=packages/common -w=packages/website -w=packages/api -- --max-warnings 0",
-  "*.tsx": "npm run lint:check -w=packages/common -w=packages/website -w=packages/api -- --max-warnings 0"
+  "*.js": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings 0 | bash",
+  "*.ts": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings 0 | bash",
+  "*.jsx": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings 0 | bash",
+  "*.tsx": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings  | bash0"
 }

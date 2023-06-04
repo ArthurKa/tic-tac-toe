@@ -2,11 +2,15 @@ import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
 import { useLoader } from '@react-three/fiber';
 import { BoxHelper, Plane, Ray, Vector3 } from 'three';
 import { useHelper } from '@react-three/drei';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDrag } from '@use-gesture/react';
 import { a, useSpring } from '@react-spring/three';
+import { tuple } from '@arthurka/ts-utils';
+import { throttle } from 'throttle-debounce';
+import { ClientToServerEvents, ServerToClientEvents } from '@tic-tac-toe/common';
 import { NODE_ENV } from '../envVariables';
 import { tinkercadScaleMultiplier } from '../constants';
+import { socket } from '../services';
 
 export type CupProps = {
   position: [number, number];
@@ -14,6 +18,7 @@ export type CupProps = {
   color: string;
   outerGroupPosition: [number, number, number];
   outerGroupScale: [number, number, number];
+  id: string;
 };
 
 export const bigCupOuterDiameter = 14 * tinkercadScaleMultiplier;
@@ -27,7 +32,12 @@ export const cupSizeMultiplier = {
 const floorPlane = new Plane(new Vector3(0, 1, 0));
 const planeIntersectPoint = new Vector3();
 
+const setCupPosition = throttle(100, (...params: Parameters<ClientToServerEvents['setCupPosition']>) => {
+  socket.emit('setCupPosition', ...params);
+});
+
 export const Cup: React.FC<CupProps> = ({
+  id,
   size,
   color,
   outerGroupPosition,
@@ -46,25 +56,40 @@ export const Cup: React.FC<CupProps> = ({
     position: [0, 0, 0],
   }));
 
-  const bind = useDrag(({ active, event }) => {
+  const getDragEvents = useDrag(({ active, event }) => {
     if('ray' in event && event.ray instanceof Ray) {
       event.ray.intersectPlane(floorPlane, planeIntersectPoint);
     }
 
-    api.start({
-      position: [
-        (planeIntersectPoint.x - outerGroupPosition[0]) * outerGroupScale[0] - x,
-        (active ? cupSizeMultiplier[size] / 2 : 0) - outerGroupPosition[1] * outerGroupScale[1],
-        (planeIntersectPoint.z - outerGroupPosition[2]) * outerGroupScale[2] - y,
-      ],
-    });
+    const position = tuple(
+      (planeIntersectPoint.x - outerGroupPosition[0]) * outerGroupScale[0] - x,
+      (active ? cupSizeMultiplier[size] / 2 : 0) - outerGroupPosition[1] * outerGroupScale[1],
+      (planeIntersectPoint.z - outerGroupPosition[2]) * outerGroupScale[2] - y,
+    );
+
+    api.start({ position });
+    setCupPosition(id, position);
   });
+
+  useEffect(() => {
+    const setCupPosition: ServerToClientEvents['setCupPosition'] = (_id, position) => {
+      if(_id === id) {
+        api.start({ position });
+      }
+    };
+
+    socket.on('setCupPosition', setCupPosition);
+
+    return () => {
+      socket.off('setCupPosition', setCupPosition);
+    };
+  }, [api, id]);
 
   return (
     // @ts-expect-error
     <a.group {...{
       ...spring,
-      ...bind(),
+      ...getDragEvents(),
     }}
     >
       <a.mesh {...{

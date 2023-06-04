@@ -23,15 +23,15 @@ export const Cups: React.FC = () => {
   return (
     <>
       {
-        cupColors.map((color, i) => {
-          const k = (-1) ** (i + 1);
+        cupColors.map((color, _k) => {
+          const k = (-1) ** (_k + 1);
 
           const groupPosition = tuple(k, 0, 4.5 * -k);
           const groupScale = tuple(1, 1, -k);
 
           return (
             <group {...{
-              key: i,
+              key: _k,
               position: groupPosition,
               scale: groupScale,
             }}
@@ -46,6 +46,7 @@ export const Cups: React.FC = () => {
                       position: [getSideCupX(size) * (j - 1), getCupY(size)],
                       outerGroupPosition: groupPosition,
                       outerGroupScale: groupScale,
+                      id: `${_k}-${i}-${j}`,
                     }}
                     />
                   ))

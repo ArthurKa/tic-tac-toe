@@ -24,3 +24,6 @@ export const HOST = getEnvVariable(process.env.HOST, 'HOST');
 
 /** @example 3002 */
 export const PORT = +getEnvVariable(process.env.PORT, 'PORT');
+
+/** @example http://localhost:3001 */
+export const API_URL = getEnvVariable(process.env.API_URL, 'API_URL');

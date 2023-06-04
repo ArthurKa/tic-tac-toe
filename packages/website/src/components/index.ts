@@ -5,3 +5,4 @@ export * from './DevHelpers';
 export * from './Game';
 export * from './Ground';
 export * from './Lights';
+export * from './OrbitControls';

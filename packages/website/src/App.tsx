@@ -1,11 +1,10 @@
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { MOUSE, TOUCH } from 'three';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import { StylesReset } from './style-reset';
-import { DevHelpers, Game, Lights } from './components';
+import { DevHelpers, Game, Lights, OrbitControls } from './components';
 import { skyColor } from './constants';
-import { NODE_ENV } from './envVariables';
+import { connectSocketHandlers } from './services';
 
 const StyledCanvas = styled(Canvas)`
   height: 100vh !important;
@@ -13,6 +12,8 @@ const StyledCanvas = styled(Canvas)`
 `;
 
 export const App: React.FC = () => {
+  useEffect(connectSocketHandlers, []);
+
   return (
     <>
       <StylesReset />
@@ -22,19 +23,7 @@ export const App: React.FC = () => {
       }}
       >
         <DevHelpers />
-        <OrbitControls {...{
-          ...NODE_ENV !== 'development' && {
-            maxPolarAngle: Math.PI / 2.01,
-          },
-          mouseButtons: {
-            RIGHT: MOUSE.ROTATE,
-            MIDDLE: MOUSE.DOLLY,
-          },
-          touches: {
-            TWO: TOUCH.DOLLY_ROTATE,
-          },
-        }}
-        />
+        <OrbitControls />
         <Lights />
         <Game />
       </StyledCanvas>
