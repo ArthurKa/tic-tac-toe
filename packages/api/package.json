@@ -12,6 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@arthurka/ts-utils": "^3.9.2",
     "@tic-tac-toe/common": "1.0.0",
     "dotenv": "16.1.3",
     "express": "4.18.2",

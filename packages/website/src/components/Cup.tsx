@@ -32,8 +32,8 @@ export const cupSizeMultiplier = {
 const floorPlane = new Plane(new Vector3(0, 1, 0));
 const planeIntersectPoint = new Vector3();
 
-const setCupPosition = throttle(100, (...params: Parameters<ClientToServerEvents['setCupPosition']>) => {
-  socket.emit('setCupPosition', ...params);
+const sendCupPosition = throttle(100, (...params: Parameters<ClientToServerEvents['sendCupPosition']>) => {
+  socket.emit('sendCupPosition', ...params);
 });
 
 export const Cup: React.FC<CupProps> = ({
@@ -52,6 +52,8 @@ export const Cup: React.FC<CupProps> = ({
     useHelper(ref, BoxHelper, 'red');
   }
 
+  const curPosition = useRef<[number, number, number] | null>(null);
+
   const [spring, api] = useSpring(() => ({
     position: [0, 0, 0],
   }));
@@ -67,23 +69,40 @@ export const Cup: React.FC<CupProps> = ({
       (planeIntersectPoint.z - outerGroupPosition[2]) * outerGroupScale[2] - y,
     );
 
+    curPosition.current = position;
     api.start({ position });
-    setCupPosition(id, position);
+    sendCupPosition(id, position);
   });
 
   useEffect(() => {
-    const setCupPosition: ServerToClientEvents['setCupPosition'] = (_id, position) => {
+    const sendCupPosition: ServerToClientEvents['sendCupPosition'] = (_id, position) => {
       if(_id === id) {
+        curPosition.current = position;
         api.start({ position });
       }
     };
 
-    socket.on('setCupPosition', setCupPosition);
+    socket.on('sendCupPosition', sendCupPosition);
 
     return () => {
-      socket.off('setCupPosition', setCupPosition);
+      socket.off('sendCupPosition', sendCupPosition);
     };
   }, [api, id]);
+
+  useEffect(() => {
+    const shareCupPosition = () => {
+      if(curPosition.current) {
+        socket.emit('sendCupPosition', id, curPosition.current);
+      }
+    };
+
+    socket.on('shareCupPosition', shareCupPosition);
+    socket.emit('shareCupPosition', id);
+
+    return () => {
+      socket.off('shareCupPosition', shareCupPosition);
+    };
+  }, [id]);
 
   return (
     // @ts-expect-error
