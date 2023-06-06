@@ -18,7 +18,9 @@ env:
     docker-compose build &&
     docker-compose stop &&
     docker-compose up -d &&
-    echo "New build has been deployed.";
+    echo "New build has been successfully redeployed." &&
+    docker system prune -f &&
+    true;
 
 jobs:
   redeploy:
