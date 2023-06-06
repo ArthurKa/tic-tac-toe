@@ -9,14 +9,14 @@ export const Lights: React.FC = () => {
 
   if(NODE_ENV === 'development') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useHelper(ref, DirectionalLightHelper, 3, 'yellow');
+    useHelper(ref, DirectionalLightHelper, 5, 'yellow');
   }
 
   return (
     <>
       <directionalLight {...{
         ref,
-        position: [10, 10, -10],
+        position: [50, 50, -50],
         castShadow: true,
         'shadow-mapSize-height': 1000,
         'shadow-mapSize-width': 1000,

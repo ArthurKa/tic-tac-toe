@@ -9,15 +9,11 @@ function getEnvVariable(name: string): string {
   return value;
 }
 
-const nodeEnv = getEnvVariable('NODE_ENV');
-
 /** @example 'development' */
 export const NODE_ENV = (
-  nodeEnv === 'production'
+  getEnvVariable('NODE_ENV') === 'production'
     ? 'production'
-    : nodeEnv === 'testing'
-      ? 'testing'
-      : 'development'
+    : 'development'
 );
 
 /** @example 'http://localhost' */

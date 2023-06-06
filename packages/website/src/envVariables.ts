@@ -14,8 +14,8 @@ const nodeEnv = getEnvVariable(process.env.NODE_ENV, 'NODE_ENV');
 export const NODE_ENV = (
   nodeEnv === 'production'
     ? 'production'
-    : nodeEnv === 'testing'
-      ? 'testing'
+    : nodeEnv === 'preview'
+      ? 'preview'
       : 'development'
 );
 

@@ -1,10 +1,17 @@
 import { Canvas } from '@react-three/fiber';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useEffect } from 'react';
 import { StylesReset } from './style-reset';
 import { DevHelpers, Game, Lights, OrbitControls } from './components';
 import { skyColor } from './constants';
-import { connectSocketHandlers } from './services';
+import { connectSocketHandlers, useMouseMove } from './services';
+
+export const GlobalStyles = createGlobalStyle`
+  #root {
+    position: relative;
+    overflow: hidden;
+  }
+`;
 
 const StyledCanvas = styled(Canvas)`
   height: 100vh !important;
@@ -13,10 +20,12 @@ const StyledCanvas = styled(Canvas)`
 
 export const App: React.FC = () => {
   useEffect(connectSocketHandlers, []);
+  useMouseMove();
 
   return (
     <>
       <StylesReset />
+      <GlobalStyles />
       <StyledCanvas {...{
         shadows: true,
         camera: { position: [5, 20, 10], zoom: 2 },
