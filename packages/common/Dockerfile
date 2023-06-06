@@ -34,10 +34,10 @@ RUN true && \
     packages/website
 
 
-FROM node:18.13.0-alpine
+# FROM node:18.13.0-alpine
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY --from=0 /app ./
+# COPY --from=0 /app ./
 
 ENTRYPOINT tail -f /dev/null

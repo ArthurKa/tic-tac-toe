@@ -20,10 +20,10 @@ RUN true && \
   mv ./prod_node_modules ./node_modules
 
 
-FROM node:18.13.0-alpine
+# FROM node:18.13.0-alpine
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY --from=0 /app ./
+# COPY --from=0 /app ./
 
 ENTRYPOINT npm run website:start
