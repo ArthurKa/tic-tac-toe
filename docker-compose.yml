@@ -2,6 +2,7 @@ version: '3.9'
 services:
   common:
     container_name: common
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./packages/common/Dockerfile
@@ -16,6 +17,7 @@ services:
       common:
         condition: service_healthy
     container_name: api
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./packages/api/Dockerfile
@@ -29,6 +31,7 @@ services:
       common:
         condition: service_healthy
     container_name: website
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./packages/website/Dockerfile
