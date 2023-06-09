@@ -19,8 +19,9 @@ env:
     docker-compose stop &&
     docker-compose up -d &&
     echo "New build has been successfully redeployed." &&
-    docker system prune -f &&
-    true;
+    curl -H "title:Tic Tac Toe" -d "New build has been successfully redeployed." ntfy.sh/7bb65757-3e95-4314-b526-37ab8e28537d &&
+    docker system prune -f ||
+    curl -H "title:Tic Tac Toe" -d "Something went wrong." ntfy.sh/7bb65757-3e95-4314-b526-37ab8e28537d;
 
 jobs:
   redeploy:
