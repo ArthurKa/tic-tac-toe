@@ -3,12 +3,19 @@
 
 const fs = require('fs');
 const path = require('path');
-
+const { execSync } = require('child_process');
 const { workspaces: { packages } } = require('../package.json');
 
+const packageNames = (
+  execSync(`ls ${packages.join(' ')}`)
+    .toString('utf-8')
+    .split('\n')
+    .filter(e => e.endsWith(':'))
+    .map(e => e.slice(0, -1))
+);
 const filepaths = [
   'package.json',
-  ...packages.map(e => `${e}/package.json`),
+  ...packageNames.map(e => `${e}/package.json`),
 ];
 
 for(const filepath of filepaths) {

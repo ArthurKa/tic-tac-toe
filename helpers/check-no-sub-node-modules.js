@@ -3,10 +3,18 @@
 
 const fs = require('fs');
 const path = require('path');
-
+const { execSync } = require('child_process');
 const { workspaces: { packages } } = require('../package.json');
 
-for(const pkg of packages) {
+const packageNames = (
+  execSync(`ls ${packages.join(' ')}`)
+    .toString('utf-8')
+    .split('\n')
+    .filter(e => e.endsWith(':'))
+    .map(e => e.slice(0, -1))
+);
+
+for(const pkg of packageNames) {
   try {
     fs.readdirSync(path.join(pkg, 'node_modules'));
     throw new Error(`Pay attention to existed ${pkg}/node_modules`);
