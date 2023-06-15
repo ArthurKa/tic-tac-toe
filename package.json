@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "lint:check": "echo npm run lint:check -w=packages/{common,api,website} | bash",
-    "lint:fix": "echo npm run lint:fix -w=packages/{common,api,website} | bash",
     "common:build": "npm run start-checks && npm run build -w=packages/common",
     "common:build:watch": "npm run start-checks && npm run build:watch -w=packages/common",
     "common:healthy": "npm run healthy -w=packages/common",
@@ -13,8 +11,6 @@
     "api:ts:noWatch": "npm run start-checks && npm run ts:noWatch -w=packages/api",
     "api:dev": "npm run start-checks && npm run dev -w=packages/api",
     "api:build": "npm run start-checks && npm run build -w=packages/api",
-    "website:lint:check": "npm run lint:check -w=packages/website",
-    "website:lint:fix": "npm run lint:fix -w=packages/website",
     "website:ts": "npm run start-checks && npm run ts -w=packages/website",
     "website:ts:noWatch": "npm run start-checks && npm run ts:noWatch -w=packages/website",
     "website:dev": "npm run start-checks && npm run dev -w=packages/website",
@@ -27,6 +23,7 @@
   },
   "devDependencies": {
     "@arthurka/eslint": "3.14.0",
+    "@types/lint-staged": "13.2.0",
     "husky": "8.0.3",
     "lint-staged": "13.2.2"
   },

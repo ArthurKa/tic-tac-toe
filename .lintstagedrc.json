@@ -1,6 +1,0 @@
-{
-  "*.js": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings 0 | bash",
-  "*.ts": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings 0 | bash",
-  "*.jsx": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings 0 | bash",
-  "*.tsx": "echo npm run lint:check -w=packages/{common,website,api} -- --max-warnings  | bash0"
-}

@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "lint:check": "eslint --ext js,jsx,ts,tsx src",
-    "lint:fix": "npm run lint:check -- --fix",
     "ts:noWatch": "tsc --noEmit",
     "ts": "npm run ts:noWatch -- --watch",
     "dev": "nodemon -e ts,tsx,js,jsx -w .env -w ../common -i node_modules -x \"dotenv webpack serve\"",

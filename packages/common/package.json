@@ -4,8 +4,6 @@
   "private": true,
   "main": "dist",
   "scripts": {
-    "lint:check": "eslint --ext js,jsx,ts,tsx src",
-    "lint:fix": "npm run lint:check -- --fix",
     "healthy": "ls dist || exit 1",
     "build": "rm -rf dist && tsc",
     "build:watch": "npm run build -- --watch"

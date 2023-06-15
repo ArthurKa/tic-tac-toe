@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+npm run start-checks
 node helpers/check-no-sub-node-modules.js
 node helpers/eslint.js
-npx lint-staged
+npx lint-staged -rq
 
 if [[ `git diff @ --name-only | grep -E "^packages/common/"` != "" ]]; then
   npm run api:ts:noWatch
