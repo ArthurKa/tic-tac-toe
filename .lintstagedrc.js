@@ -18,8 +18,27 @@ module.exports = ((/** @type {import('lint-staged').Config} */ e) => e)({
       return acc;
     }, /** @type {Record<string, string[]>} */ ({}));
 
-    return Object.entries(filesObj).map(([pkg, files]) => (
+    const linter = Object.entries(filesObj).map(([pkg, files]) => (
       `${pkg ? `npx -w=${pkg} ` : ''}eslint --max-warnings=0 ${files.join(' ')}`
     ));
+
+    /** @type {string[]} */
+    const checkTSPackages = [];
+
+    if(filesObj['packages/common']) {
+      checkTSPackages.push('api', 'website');
+    } else {
+      if(filesObj['packages/api']) {
+        checkTSPackages.push('api');
+      }
+      if(filesObj['packages/website']) {
+        checkTSPackages.push('website');
+      }
+    }
+
+    return [
+      ...linter,
+      ...checkTSPackages.map(e => `npm run ${e}:ts:noWatch`),
+    ];
   },
 });
