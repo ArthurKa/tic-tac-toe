@@ -2,7 +2,6 @@ version: '3.9'
 services:
   common:
     container_name: common
-    restart: unless-stopped
     build:
       context: .
       dockerfile: ./packages/common/Dockerfile

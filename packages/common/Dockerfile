@@ -40,4 +40,5 @@ RUN true && \
 
 # COPY --from=0 /app ./
 
-ENTRYPOINT tail -f /dev/null
+# ENTRYPOINT tail -f /dev/null
+ENTRYPOINT sleep 60
