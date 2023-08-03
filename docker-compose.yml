@@ -5,16 +5,17 @@ services:
     build:
       context: .
       dockerfile: ./packages/common/Dockerfile
-    healthcheck:
-      test: npm run common:healthy
-      interval: 10s
-      timeout: 10s
-      retries: 10
+    # healthcheck:
+    #   test: npm run common:healthy
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 10
 
   api:
     depends_on:
-      common:
-        condition: service_healthy
+      - common
+      # common:
+      #   condition: service_healthy
     container_name: api
     restart: unless-stopped
     build:
@@ -27,8 +28,9 @@ services:
 
   website:
     depends_on:
-      common:
-        condition: service_healthy
+      - common
+      # common:
+      #   condition: service_healthy
     container_name: website
     restart: unless-stopped
     build:
