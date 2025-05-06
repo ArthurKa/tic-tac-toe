@@ -1,7 +1,7 @@
 import '@react-three/drei';
 import { Object3D } from 'three';
 
-type Slice1<T> = T extends [infer U, ...infer R] ? R : never;
+type Slice1<T> = T extends [unknown, ...infer R] ? R : never;
 
 declare module '@react-three/drei' {
   function useHelper<T extends new (...args: any[]) => any>(

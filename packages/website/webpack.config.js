@@ -27,7 +27,7 @@ module.exports = ((/** @type {import('webpack-dev-server').WebpackConfiguration}
   entry: path.resolve('src/index.tsx'),
   output: {
     path: publicDir,
-    filename: 'main.js',
+    filename: '[name].bundle.[chunkhash].js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],

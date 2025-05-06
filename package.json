@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prune": "rm -rf node_modules && npm run prune:sub",
+    "prune:sub": "rm -rf packages/*/node_modules",
     "common:build": "npm run start-checks && npm run build -w=packages/common",
     "common:build:watch": "npm run start-checks && npm run build:watch -w=packages/common",
     "common:healthy": "npm run healthy -w=packages/common",

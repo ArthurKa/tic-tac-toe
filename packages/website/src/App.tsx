@@ -6,7 +6,7 @@ import { DevHelpers, Game, Lights, OrbitControls } from './components';
 import { skyColor } from './constants';
 import { connectSocketHandlers, useMouseMove } from './services';
 
-export const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   #root {
     position: relative;
     overflow: hidden;

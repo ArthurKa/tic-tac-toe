@@ -15,8 +15,8 @@ env:
     git fetch &&
     git reset --hard origin/master &&
     node helpers/make-package-docker-jsons.js &&
-    docker-compose build &&
     docker-compose stop &&
+    docker-compose build &&
     docker-compose up -d &&
     echo "New build has been successfully redeployed." &&
     curl -H "title:Tic Tac Toe" -d "New build has been successfully redeployed." ntfy.sh/7bb65757-3e95-4314-b526-37ab8e28537d &&
