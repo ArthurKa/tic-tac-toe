@@ -1,4 +1,4 @@
-FROM node:18.13.0-alpine
+FROM node:18.13.0-alpine AS base
 
 WORKDIR /app
 
@@ -36,7 +36,7 @@ FROM node:18.13.0-alpine
 
 WORKDIR /app
 
-COPY --from=0 /app ./
+COPY --from=base /app ./
 
 # ENTRYPOINT tail -f /dev/null
 # ENTRYPOINT sleep 60

@@ -1,4 +1,4 @@
-FROM tic-tac-toe_common
+FROM tic-tac-toe_common AS base
 
 COPY packages/website/package.json \
   packages/website/tsconfig.json \
@@ -24,6 +24,6 @@ FROM node:18.13.0-alpine
 
 WORKDIR /app
 
-COPY --from=0 /app ./
+COPY --from=base /app ./
 
 ENTRYPOINT npm run website:start
